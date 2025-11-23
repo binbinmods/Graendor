@@ -1,0 +1,10 @@
+{
+  "name": "Graendor_The_SubclassToReplace",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/binbinmods/Graendor",
+  "description": "New Hero Mod for Graendor, the SubclassToReplace. ...",
+  "dependencies": [
+    "meds-Obeliskial_Content-1.5.6",
+    "meds-Obeliskial_Essentials-1.5.0"
+  ]
+}
