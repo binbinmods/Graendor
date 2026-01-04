@@ -1,0 +1,15 @@
+{
+    "Card0": "icebreakermolebuster",
+    "Card1": "pommel",
+    "Card2": "provoke",
+    "Card3": "maul",
+    "Card4": "shieldbreaker",
+    "Card5": "",
+    "CardSpecial0": "",
+    "CardSpecial1": "",
+    "PackClass": "warrior",
+    "PackID": "graendor",
+    "PackName": "Graendor",
+    "PerkList": [],
+    "RequiredClass": "icebreaker"
+}

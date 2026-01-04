@@ -1,0 +1,8 @@
+{
+    "NewGameObjectID": "skingraendor",
+    "BaseGameObjectID": "GraendorIcebreaker",
+    "SpriteToUse": "",
+    "ScaleX": 1,
+    "ScaleY": 1,
+    "Flip": true
+}

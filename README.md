@@ -1,4 +1,4 @@
-# Graendor, the SubclassToReplace
+# Graendor, the Icebreaker
 
 A hero mod, introducing Graendor, ...
 

@@ -1,0 +1,15 @@
+{
+    "BaseSkin": true,
+    "PerkLevel": 0,
+    "SkinGO": "skingraendor",
+    "SkinID": "icebreakerbase",
+    "SkinName": "Default",
+    "SkinOrder": 0,
+    "SkinSubclass": "icebreaker",
+    "Sku": "",
+    "SpritePortrait": "graendorPortrait",
+    "SpritePortraitGrande": "graendorPortraitGrande",
+    "SpriteSilueta": "graendorSilueta",
+    "SpriteSiluetaGrande": "graendorSiluetaGrande",
+    "SteamStat": ""
+}

@@ -5,7 +5,7 @@
 	<RootNamespace>Graendor</RootNamespace>
 	<Product>Graendor</Product>
     <AssemblyName>com.binbin.Graendor</AssemblyName>
-    <Description>Graendor, The SubclassToReplace</Description>
+    <Description>Graendor, The Icebreaker</Description>
     <Version>0.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>

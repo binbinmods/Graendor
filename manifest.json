@@ -1,8 +1,8 @@
 {
-  "name": "Graendor_The_SubclassToReplace",
+  "name": "Graendor_The_Icebreaker",
   "version_number": "0.1.0",
   "website_url": "https://github.com/binbinmods/Graendor",
-  "description": "New Hero Mod for Graendor, the SubclassToReplace. ...",
+  "description": "New Hero Mod for Graendor, the Icebreaker. ...",
   "dependencies": [
     "meds-Obeliskial_Content-1.5.6",
     "meds-Obeliskial_Essentials-1.5.0"

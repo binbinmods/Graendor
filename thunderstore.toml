@@ -5,7 +5,7 @@ schemaVersion = "0.1.0"
 namespace = "Binbin"
 name = "Graendor"
 versionNumber = "0.1.0"
-description = "Hero Mod for Graendor, the SubclassToReplace. ..."
+description = "Hero Mod for Graendor, the Icebreaker. ..."
 websiteUrl = "https://github.com/binbinmods/Graendor"
 containsNsfwContent = false
 

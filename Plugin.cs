@@ -27,7 +27,7 @@ namespace Graendor
         public static string characterName = "Graendor";
         public static string heroName = characterName;
 
-        public static string subclassName = "SubclassToReplace"; // needs caps
+        public static string subclassName = "Icebreaker"; // needs caps
 
         public static string subclassname = subclassName.ToLower();
         public static string itemStem = subclassname;
@@ -44,7 +44,7 @@ namespace Graendor
             RegisterMod(
                 _name: PluginInfo.PLUGIN_NAME,
                 _author: "binbin",
-                _description: "Graendor, the SubclassToReplace.",
+                _description: "Graendor, the Icebreaker.",
                 _version: PluginInfo.PLUGIN_VERSION,
                 _date: ModDate,
                 _link: @"https://github.com/binbinmods/Graendor",
