@@ -54,7 +54,7 @@ namespace Graendor
             _target.ModifyHp(_hp);
             CastResolutionForCombatText _cast = new CastResolutionForCombatText();
             _cast.heal = _hp;
-            if ((Object)_target.HeroItem != (Object)null)
+            if (_target.HeroItem != null)
             {
                 _target.HeroItem.ScrollCombatTextDamageNew(_cast);
                 EffectsManager.Instance.PlayEffectAC("healimpactsmall", true, _target.HeroItem.CharImageT, false);
@@ -91,7 +91,7 @@ namespace Graendor
             _target.ModifyHp(_hp);
             CastResolutionForCombatText _cast = new CastResolutionForCombatText();
             _cast.heal = _hp;
-            if ((Object)_target.HeroItem != (Object)null)
+            if (_target.HeroItem != null)
             {
                 _target.HeroItem.ScrollCombatTextDamageNew(_cast);
                 EffectsManager.Instance.PlayEffectAC("healimpactsmall", true, _target.HeroItem.CharImageT, false);
@@ -203,7 +203,7 @@ namespace Graendor
         /// <param name="traitName">name of the trait used in the combat log (i.e. "Defense Mastery")</param>
         public static void ReduceCardTypeCostUntilDiscarded(Enums.CardType cardType, int amountToReduce, ref Character _character, ref List<string> heroHand, ref List<CardData> cardDataList, string traitName)
         {
-            if (!((Object)_character.HeroData != (Object)null))
+            if (!(_character.HeroData != null))
                 return;
             int num = amountToReduce;
             if (num <= 0)
@@ -213,13 +213,13 @@ namespace Graendor
             for (int index = 0; index < heroHand.Count; ++index)
             {
                 CardData cardData = MatchManager.Instance.GetCardData(heroHand[index]);
-                if ((Object)cardData != (Object)null && cardData.GetCardFinalCost() > 0 && cardData.HasCardType(cardType))
+                if (cardData != null && cardData.GetCardFinalCost() > 0 && cardData.HasCardType(cardType))
                     cardDataList.Add(cardData);
             }
             for (int index = 0; index < cardDataList.Count; ++index)
             {
                 CardData cardData = cardDataList[index];
-                if ((Object)cardData != (Object)null)
+                if (cardData != null)
                 {
                     cardData.EnergyReductionTemporal += num;
                     MatchManager.Instance.UpdateHandCards();
@@ -288,7 +288,7 @@ namespace Graendor
         /// <param name="traitId">Trait this is attributable to</param>
         public static void Duality(ref Character _character, ref CardData _castedCard, Enums.CardClass class1, Enums.CardClass class2, string traitId, int bonusActivations = 0)
         {
-            if (!((Object)MatchManager.Instance != (Object)null) || !((Object)_castedCard != (Object)null))
+            if (!(MatchManager.Instance != null) || !(_castedCard != null))
                 return;
             TraitData traitData = Globals.Instance.GetTraitData(traitId);
             if (MatchManager.Instance.activatedTraits != null && MatchManager.Instance.activatedTraits.ContainsKey(traitId) && MatchManager.Instance.activatedTraits[traitId] > (traitData.TimesPerTurn - 1 + bonusActivations))
@@ -309,7 +309,7 @@ namespace Graendor
                 }
                 if (_castedCard.CardClass == cardClass1)
                 {
-                    if (MatchManager.Instance.CountHeroHand() == 0 || !((Object)_character.HeroData != (Object)null))
+                    if (MatchManager.Instance.CountHeroHand() == 0 || !(_character.HeroData != null))
                         break;
                     List<CardData> cardDataList = new List<CardData>();
                     List<string> heroHand = MatchManager.Instance.GetHeroHand(_character.HeroIndex);
@@ -317,7 +317,7 @@ namespace Graendor
                     for (int index2 = 0; index2 < heroHand.Count; ++index2)
                     {
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index2]);
-                        if ((Object)cardData != (Object)null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) > num1)
+                        if (cardData != null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) > num1)
                             num1 = _character.GetCardFinalCost(cardData);
                     }
                     if (num1 <= 0)
@@ -325,13 +325,13 @@ namespace Graendor
                     for (int index3 = 0; index3 < heroHand.Count; ++index3)
                     {
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index3]);
-                        if ((Object)cardData != (Object)null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) >= num1)
+                        if (cardData != null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) >= num1)
                             cardDataList.Add(cardData);
                     }
                     if (cardDataList.Count <= 0)
                         break;
                     CardData cardData1 = cardDataList.Count != 1 ? cardDataList[MatchManager.Instance.GetRandomIntRange(0, cardDataList.Count, "trait")] : cardDataList[0];
-                    if (!((Object)cardData1 != (Object)null))
+                    if (!(cardData1 != null))
                         break;
                     if (!MatchManager.Instance.activatedTraits.ContainsKey(traitId))
                         MatchManager.Instance.activatedTraits.Add(traitId, 1);
@@ -361,7 +361,7 @@ namespace Graendor
         /// <param name="_trait"> Trait this is attributed to</param>
         public static void PermanentyReduceXWhenYouPlayY(ref Character _character, ref CardData _castedCard, Enums.CardType reduceThis, Enums.CardType whenYouPlayThis, int amountToReduce, string _trait)
         {
-            if (!((Object)MatchManager.Instance != (Object)null) || !((Object)_castedCard != (Object)null))
+            if (!(MatchManager.Instance != null) || !(_castedCard != null))
                 return;
             TraitData traitData = Globals.Instance.GetTraitData(_trait);
             if (MatchManager.Instance.activatedTraits != null && MatchManager.Instance.activatedTraits.ContainsKey(_trait) && MatchManager.Instance.activatedTraits[_trait] > traitData.TimesPerTurn - 1)
@@ -370,7 +370,7 @@ namespace Graendor
             if (!_castedCard.GetCardTypes().Contains(whenYouPlayThis))
                 return;
 
-            if (MatchManager.Instance.CountHeroHand() == 0 || !((Object)_character.HeroData != (Object)null))
+            if (MatchManager.Instance.CountHeroHand() == 0 || !(_character.HeroData != null))
                 return;
 
 
@@ -382,7 +382,7 @@ namespace Graendor
                 for (int handIndex = 0; handIndex < heroHand.Count; ++handIndex)
                 {
                     CardData cardData = MatchManager.Instance.GetCardData(heroHand[handIndex]);
-                    if ((Object)cardData != (Object)null)
+                    if (cardData != null)
                         cardDataList.Add(cardData);
                 }
             }
@@ -391,7 +391,7 @@ namespace Graendor
                 for (int handIndex = 0; handIndex < heroHand.Count; ++handIndex)
                 {
                     CardData cardData = MatchManager.Instance.GetCardData(heroHand[handIndex]);
-                    if ((Object)cardData != (Object)null && cardData.GetCardTypes().Contains(reduceThis))
+                    if (cardData != null && cardData.GetCardTypes().Contains(reduceThis))
                         cardDataList.Add(cardData);
                 }
             }
@@ -1239,7 +1239,7 @@ namespace Graendor
 
             _character.ModifyEnergy(energyToGain, true);
 
-            if (((Object)_character.HeroItem == (Object)null))
+            if ((_character.HeroItem == null))
                 return;
 
             LogDebug("GainEnergy - Setting Effect AC");
@@ -1434,7 +1434,7 @@ namespace Graendor
             for (int index = 0; index < heroHand.Count; ++index)
             {
                 CardData cardData = MatchManager.Instance.GetCardData(heroHand[index]);
-                if ((Object)cardData != (Object)null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() > num1)
+                if (cardData != null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() > num1)
                     num1 = cardData.GetCardFinalCost();
             }
             if (num1 <= 0)
@@ -1442,7 +1442,7 @@ namespace Graendor
             for (int index = 0; index < heroHand.Count; ++index)
             {
                 CardData cardData = MatchManager.Instance.GetCardData(heroHand[index]);
-                if ((Object)cardData != (Object)null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() >= num1)
+                if (cardData != null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() >= num1)
                     cardDataList.Add(cardData);
             }
             if (cardDataList.Count <= 0)
@@ -1625,7 +1625,7 @@ namespace Graendor
         /// <param name="traitId">Trait this is attributable to</param>
         public static void DualityCardType(ref Character _character, ref CardData _castedCard, Enums.CardType[] cardTypes1, Enums.CardType[] cardTypes2, string traitId, int bonusActivations = 0)
         {
-            if (!((Object)MatchManager.Instance != (Object)null) || !((Object)_castedCard != (Object)null))
+            if (!(MatchManager.Instance != null) || !(_castedCard != null))
                 return;
             TraitData traitData = Globals.Instance.GetTraitData(traitId);
             if (MatchManager.Instance.activatedTraits != null && MatchManager.Instance.activatedTraits.ContainsKey(traitId) && MatchManager.Instance.activatedTraits[traitId] > (traitData.TimesPerTurn - 1 + bonusActivations))
@@ -1650,7 +1650,7 @@ namespace Graendor
                 // bool hasCardType2 = types2.Any(castedCard.HasCardType);
                 if (hasProperCardTypeToTrigger)
                 {
-                    if (MatchManager.Instance.CountHeroHand() == 0 || !((Object)_character.HeroData != (Object)null))
+                    if (MatchManager.Instance.CountHeroHand() == 0 || !(_character.HeroData != null))
                         break;
                     List<CardData> cardDataList = new List<CardData>();
                     List<string> heroHand = MatchManager.Instance.GetHeroHand(_character.HeroIndex);
@@ -1659,7 +1659,7 @@ namespace Graendor
                     {
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index2]);
                         bool hasProperCardTypeToReduce = types2.Any(cardData.HasCardType);
-                        if ((Object)cardData != (Object)null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) > num1)
+                        if (cardData != null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) > num1)
                             num1 = _character.GetCardFinalCost(cardData);
                     }
                     if (num1 <= 0)
@@ -1669,13 +1669,13 @@ namespace Graendor
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index3]);
                         bool hasProperCardTypeToReduce = types2.Any(cardData.HasCardType);
 
-                        if ((Object)cardData != (Object)null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) >= num1)
+                        if (cardData != null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) >= num1)
                             cardDataList.Add(cardData);
                     }
                     if (cardDataList.Count <= 0)
                         break;
                     CardData cardData1 = cardDataList.Count != 1 ? cardDataList[MatchManager.Instance.GetRandomIntRange(0, cardDataList.Count, "trait")] : cardDataList[0];
-                    if (!((Object)cardData1 != (Object)null))
+                    if (!(cardData1 != null))
                         break;
                     if (!MatchManager.Instance.activatedTraits.ContainsKey(traitId))
                         MatchManager.Instance.activatedTraits.Add(traitId, 1);

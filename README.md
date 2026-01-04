@@ -38,7 +38,7 @@ This mod relies on [Obeliskial Content](https://across-the-obelisk.thunderstore.
 
 ## Support
 
-This has been updated for Across the Obelisk version 1.6.0.
+This has been updated for Across the Obelisk version 1.7.2.
 
 Hope you enjoy it and if have any issues, ping me in Discord or make a post in the **modding #support-and-requests** channel of the [official Across the Obelisk Discord](https://discord.gg/across-the-obelisk-679706811108163701).
 

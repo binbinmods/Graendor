@@ -88,10 +88,10 @@ namespace Graendor
             string damageTypeText = "item" + dt + "Damages";
             LogDebug("medsText - " + medsTexts[damageTypeText]);
             LogDebug("GetText - " + Texts.Instance.GetText(damageTypeText));
-            // stringBuilder.Append(string.Format(medsTexts[damageTypeText], (object)NumFormatItem(percentDamageIncrease, true, true)));
+            // stringBuilder.Append(string.Format(medsTexts[damageTypeText], NumFormatItem(percentDamageIncrease, true, true)));
 
             // this should use Texts.Instance.GetText(damageTypeText)) for translation. Don't know how to get it working. Need to add MedsTexts to Texts
-            string toAdd = string.Format(medsTexts[damageTypeText], (object)NumFormatItem(percentDamageIncrease, true, true)) + "\n";
+            string toAdd = string.Format(medsTexts[damageTypeText], NumFormatItem(percentDamageIncrease, true, true)) + "\n";
 
             // Adds it either to the start of the stringbuilder or immediately after
             // string searchPhrase = $"<space=.3><size=+.1><sprite name={dt}></size> damage ";
@@ -107,7 +107,7 @@ namespace Graendor
             stringBuilder.Insert(0, toAdd);
 
             // "<space=.3><size=+.1><sprite name=fire></size> damage  <nobr><color=#263ABC><size=+.1>+3</color></size></nobr>"
-            // stringBuilder.Append(string.Format(Texts.Instance.GetText("itemAllDamages"), (object)NumFormatItem(percentDamageIncrease, true, true)));
+            // stringBuilder.Append(string.Format(Texts.Instance.GetText("itemAllDamages"), NumFormatItem(percentDamageIncrease, true, true)));
             // stringBuilder.Append("\n");
         }
 

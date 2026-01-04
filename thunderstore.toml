@@ -11,7 +11,7 @@ containsNsfwContent = false
 
 [package.dependencies]
 meds-Obeliskial_Essentials = "1.5.1"
-meds-Obeliskial_Content = "1.6.0"
+meds-Obeliskial_Content = "1.7.2"
 
 
 [build]

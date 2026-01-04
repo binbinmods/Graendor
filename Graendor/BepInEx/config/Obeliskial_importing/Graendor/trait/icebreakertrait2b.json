@@ -35,8 +35,8 @@
     "ResistModifiedValue1": 0,
     "ResistModifiedValue2": 0,
     "ResistModifiedValue3": 0,
-    "TimesPerRound": 0,
-    "TimesPerTurn": 3,
+    "TimesPerRound": 3,
+    "TimesPerTurn": 0,
     "TraitCard": "",
     "TraitCardForAllHeroes": "",
     "TraitName": "Winter's Coat"

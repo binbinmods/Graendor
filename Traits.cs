@@ -41,21 +41,23 @@ namespace Graendor
         public static string debugBase = "Binbin - Testing " + heroName + " ";
 
 
-        public static void DoCustomTrait(string _trait, ref Trait __instance)
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(Trait), "DoTrait")]
+        public static bool DoTrait(Enums.EventActivation _theEvent, string _trait, Character _character, Character _target, int _auxInt, string _auxString, CardData _castedCard, ref Trait __instance)
+        {
+            if ((UnityEngine.Object)MatchManager.Instance == (UnityEngine.Object)null)
+                return false;
+            if (Content.medsCustomTraitsSource.Contains(_trait) && myTraitList.Contains(_trait))
+            {
+                DoCustomTrait(_trait, ref __instance, ref _theEvent, ref _character, ref _target, ref _auxInt, ref _auxString, ref _castedCard);
+                return false;
+            }
+            return true;
+        }
+
+        public static void DoCustomTrait(string _trait, ref Trait __instance, ref Enums.EventActivation _theEvent, ref Character _character, ref Character _target, ref int _auxInt, ref string _auxString, ref CardData _castedCard)
         {
             // get info you may need
-            Enums.EventActivation _theEvent = Traverse.Create(__instance).Field("theEvent").GetValue<Enums.EventActivation>();
-            Character _character = Traverse.Create(__instance).Field("character").GetValue<Character>();
-            Character _target = Traverse.Create(__instance).Field("target").GetValue<Character>();
-            int _auxInt = Traverse.Create(__instance).Field("auxInt").GetValue<int>();
-            string _auxString = Traverse.Create(__instance).Field("auxString").GetValue<string>();
-            CardData _castedCard = Traverse.Create(__instance).Field("castedCard").GetValue<CardData>();
-            Traverse.Create(__instance).Field("character").SetValue(_character);
-            Traverse.Create(__instance).Field("target").SetValue(_target);
-            Traverse.Create(__instance).Field("theEvent").SetValue(_theEvent);
-            Traverse.Create(__instance).Field("auxInt").SetValue(_auxInt);
-            Traverse.Create(__instance).Field("auxString").SetValue(_auxString);
-            Traverse.Create(__instance).Field("castedCard").SetValue(_castedCard);
             TraitData traitData = Globals.Instance.GetTraitData(_trait);
             List<CardData> cardDataList = [];
             List<string> heroHand = MatchManager.Instance.GetHeroHand(_character.HeroIndex);
@@ -72,22 +74,16 @@ namespace Graendor
 
             if (_trait == trait0)
             {
-                // trait0:
+                // trait0: On Block, apply 3 Chill to target
                 LogDebug($"Handling Trait {traitId}: {traitName}");
-                _character.SetAuraTrait(_character, "evade", 1);
+                _character.SetAuraTrait(_character, "chill", 3);
             }
 
 
             else if (_trait == trait2a)
             {
                 // trait2a
-                if (CanIncrementTraitActivations(traitId) && _castedCard.HasCardType(Enums.CardType.Defense))// && MatchManager.Instance.energyJustWastedByHero > 0)
-                {
-                    LogDebug($"Handling Trait {traitId}: {traitName}");
-                    // _character?.ModifyEnergy(1);
-                    // DrawCards(1);
-                    IncrementTraitActivations(traitId);
-                }
+
             }
 
 
@@ -95,43 +91,40 @@ namespace Graendor
             else if (_trait == trait2b)
             {
                 // trait2b:
-                LogDebug($"Handling Trait {traitId}: {traitName}");
+                // On Block, AoE 10 Shield
+                if (CanIncrementTraitActivations(traitId, useRound: true))// && MatchManager.Instance.energyJustWastedByHero > 0)
+                {
+                    LogDebug($"Handling Trait {traitId}: {traitName}");
+                    ApplyAuraCurseToAll("shield", 10, AppliesTo.Heroes, sourceCharacter: _character, useCharacterMods: true);
+                    IncrementTraitActivations(traitId);
+                }
 
             }
 
             else if (_trait == trait4a)
             {
-                // trait 4a;
-
-                LogDebug($"Handling Trait {traitId}: {traitName}");
+                // trait 4a; When you play a defense, draw 1
+                if (CanIncrementTraitActivations(traitId) && _castedCard.HasCardType(Enums.CardType.Defense))// && MatchManager.Instance.energyJustWastedByHero > 0)
+                {
+                    LogDebug($"Handling Trait {traitId}: {traitName}");
+                    DrawCards(1);
+                    IncrementTraitActivations(traitId);
+                }
             }
 
             else if (_trait == trait4b)
             {
                 // trait 4b:
-                LogDebug($"Handling Trait {traitId}: {traitName}");
+                // When you play an attack, gain 1 regen
+                if (CanIncrementTraitActivations(traitId) && _castedCard.HasCardType(Enums.CardType.Attack))// && MatchManager.Instance.energyJustWastedByHero > 0)
+                {
+                    LogDebug($"Handling Trait {traitId}: {traitName}");
+
+                    _character?.SetAuraTrait(_character, "regeneration", 1);
+                    IncrementTraitActivations(traitId);
+                }
             }
 
-        }
-
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(Trait), "DoTrait")]
-        public static bool DoTrait(Enums.EventActivation _theEvent, string _trait, Character _character, Character _target, int _auxInt, string _auxString, CardData _castedCard, ref Trait __instance)
-        {
-            if ((UnityEngine.Object)MatchManager.Instance == (UnityEngine.Object)null)
-                return false;
-            Traverse.Create(__instance).Field("character").SetValue(_character);
-            Traverse.Create(__instance).Field("target").SetValue(_target);
-            Traverse.Create(__instance).Field("theEvent").SetValue(_theEvent);
-            Traverse.Create(__instance).Field("auxInt").SetValue(_auxInt);
-            Traverse.Create(__instance).Field("auxString").SetValue(_auxString);
-            Traverse.Create(__instance).Field("castedCard").SetValue(_castedCard);
-            if (Content.medsCustomTraitsSource.Contains(_trait) && myTraitList.Contains(_trait))
-            {
-                DoCustomTrait(_trait, ref __instance);
-                return false;
-            }
-            return true;
         }
 
 
@@ -148,56 +141,17 @@ namespace Graendor
             switch (_acId)
             {
                 // trait2a:
-
-                // trait2b:
-
-                // trait 4a;
-
-                // trait 4b:
-
-                case "evasion":
+                // Chill reduces Blunt damage resistance by 0.5%/charge.
+                case "chill":
                     traitOfInterest = trait2a;
                     if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.ThisHero))
                     {
+                        __result = AtOManager.Instance.GlobalAuraCurseModifyResist(__result, Enums.DamageType.Blunt, 0, -0.5f);
                     }
                     break;
-                case "stealth":
-                    traitOfInterest = trait2b;
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.Heroes))
-                    {
-                    }
-                    break;
+
             }
         }
-
-        // [HarmonyPrefix]
-        // [HarmonyPatch(typeof(Character), "HealAuraCurse")]
-        // public static void HealAuraCursePrefix(ref Character __instance, AuraCurseData AC, ref int __state)
-        // {
-        //     LogInfo($"HealAuraCursePrefix {subclassName}");
-        //     string traitOfInterest = trait4b;
-        //     if (IsLivingHero(__instance) && __instance.HaveTrait(traitOfInterest) && AC == GetAuraCurseData("stealth"))
-        //     {
-        //         __state = Mathf.FloorToInt(__instance.GetAuraCharges("stealth") * 0.25f);
-        //         // __instance.SetAuraTrait(null, "stealth", 1);
-
-        //     }
-
-        // }
-
-        // [HarmonyPostfix]
-        // [HarmonyPatch(typeof(Character), "HealAuraCurse")]
-        // public static void HealAuraCursePostfix(ref Character __instance, AuraCurseData AC, int __state)
-        // {
-        //     LogInfo($"HealAuraCursePrefix {subclassName}");
-        //     string traitOfInterest = trait4b;
-        //     if (IsLivingHero(__instance) && __instance.HaveTrait(traitOfInterest) && AC == GetAuraCurseData("stealth") && __state > 0)
-        //     {
-        //         // __state = __instance.GetAuraCharges("stealth");
-        //         __instance.SetAuraTrait(null, "stealth", __state);
-        //     }
-
-        // }
 
 
 
@@ -228,45 +182,6 @@ namespace Graendor
         {
             isDamagePreviewActive = false;
         }
-
-        // [HarmonyPostfix]
-        // [HarmonyPatch(typeof(Character), nameof(Character.SetEvent))]
-        // public static void SetEventPostfix(
-        //     Enums.EventActivation theEvent,
-        //     Character target = null,
-        //     int auxInt = 0,
-        //     string auxString = "")
-        // {
-        //     if (theEvent == Enums.EventActivation.BeginTurnCardsDealt && AtOManager.Instance.TeamHaveTrait(trait2b))
-        //     {
-        //         string cardToPlay = "tacticianexpectedprophecy";
-        //         PlayCardForFree(cardToPlay);
-        //     }
-
-        // }
-
-        // [HarmonyPostfix]
-        // [HarmonyPatch(typeof(Character), nameof(Character.GetTraitAuraCurseModifiers))]
-        // public static void GetTraitAuraCurseModifiersPostfix(ref Character __instance, ref Dictionary<string, int> __result)
-        // {
-        //     // trait2a:
-        //     // Block charges applied +1 for every 3 Dark on you.
-        //     // trait4b Shield of Nazarick increases Block charges for every 2 Dark on you.
-
-        //     string traitOfInterest = trait2a;
-        //     if (IsLivingHero(__instance) && __instance.HaveTrait(traitOfInterest))
-        //     {
-        //         LogDebug($"Handling Trait {traitOfInterest}");
-        //         int nDark = __instance.EffectCharges("dark");
-        //         int bonusBlockCharges = nDark / (__instance.HaveTrait(trait4b) ? 2 : 3);
-
-        //         if (bonusBlockCharges != 0) { __result["block"] = bonusBlockCharges; }
-        //     }
-
-        // }
-
-
-
 
 
     }
