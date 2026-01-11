@@ -1,8 +1,8 @@
 {
     "NewGameObjectID": "skingraendor",
-    "BaseGameObjectID": "GraendorIcebreaker",
+    "BaseGameObjectID": "dragon3",
     "SpriteToUse": "",
-    "ScaleX": 1,
-    "ScaleY": 1,
+    "ScaleX": 0.85,
+    "ScaleY": 0.85,
     "Flip": true
 }

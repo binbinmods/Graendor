@@ -181,7 +181,7 @@
     "PetModel": "",
     "PetOffset": "(0.00, 0.00)",
     "PetSize": "(1.00, 1.00)",
-    "Playable": false,
+    "Playable": true,
     "PullTarget": 0,
     "PushTarget": 0,
     "SelfKillHiddenSeconds": 0,
