@@ -6,7 +6,6 @@ using Obeliskial_Content;
 using UnityEngine;
 using static Graendor.CustomFunctions;
 using static Graendor.Plugin;
-using static Graendor.DescriptionFunctions;
 using static Graendor.CharacterFunctions;
 using System.Text;
 using TMPro;
@@ -96,7 +95,7 @@ namespace Graendor
                 {
                     LogDebug($"Handling Trait {traitId}: {traitName}");
                     ApplyAuraCurseToAll("shield", 10, AppliesTo.Heroes, sourceCharacter: _character, useCharacterMods: true);
-                    IncrementTraitActivations(traitId);
+                    IncrementTraitActivations(traitId, useRound: true);
                 }
 
             }

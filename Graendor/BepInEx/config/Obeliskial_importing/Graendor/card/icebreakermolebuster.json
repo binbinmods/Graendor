@@ -18,7 +18,9 @@
     "UpgradesToRare": "",
     "CardClass": "Special",
     "CardType": "Melee_Attack",
-    "CardTypeAux": [],
+    "CardTypeAux": [
+        "Attack"
+    ],
     "CardName": "Mole Buster",
     "CardRarity": "Uncommon",
     "Curse": "chill",

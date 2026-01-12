@@ -5,7 +5,7 @@ schemaVersion = "0.1.0"
 namespace = "Binbin"
 name = "Graendor"
 versionNumber = "0.1.0"
-description = "Hero Mod for Graendor, the Icebreakera Warrior specialized in applying chill and crack while defending the team"
+description = "Hero Mod for Graendor, the Icebreaker a Warrior specialized in applying chill and crack while defending the team"
 websiteUrl = "https://github.com/binbinmods/Graendor"
 containsNsfwContent = false
 
