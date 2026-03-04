@@ -1,11 +1,11 @@
 [config]
-schemaVersion = "0.1.0"
+schemaVersion = "0.2.1"
 
 [package]
 namespace = "Binbin"
 name = "Graendor"
-versionNumber = "0.1.0"
-description = "Hero Mod for Graendor, the Icebreaker a Warrior specialized in applying chill and crack while defending the team"
+versionNumber = "0.2.1"
+description = "New Hero Mod for Graendor, the Icebreaker a Warrior specialized in applying chill and crack while defending the team"
 websiteUrl = "https://github.com/binbinmods/Graendor"
 containsNsfwContent = false
 
